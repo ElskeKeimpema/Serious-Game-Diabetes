@@ -1,0 +1,2 @@
+D:\Users\ehkei\Documents\GitHub\Serious-Game-Diabetes\Seriousgame_Diabetes\Temp\UnityVS_obj\Debug\Seriousgame_Diabetes.csprojResolveAssemblyReference.cache
+D:\Users\ehkei\Documents\GitHub\Serious-Game-Diabetes\Seriousgame_Diabetes\Temp\UnityVS_obj\Debug\Seriousgame_Diabetes.csproj.CoreCompileInputs.cache
