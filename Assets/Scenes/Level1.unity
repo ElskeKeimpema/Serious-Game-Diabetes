@@ -1513,7 +1513,7 @@ GameObject:
   - component: {fileID: 249764303}
   - component: {fileID: 249764302}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: Panel_CollectedCoins
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9302,8 +9302,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 622608647}
-        m_MethodName: BackToStartMenu
+      - m_Target: {fileID: 622608650}
+        m_MethodName: ToStartMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

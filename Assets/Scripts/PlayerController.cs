@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour {
     private InGameUIScript inGameUIScript;
     private int collectedCoins = 0;
     private State state;
+    private bool isDead = false;
 
     // Private and visible in inspector
     [SerializeField]
@@ -51,35 +52,38 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        // Movable if not dead
+        if (!isDead)
+        {
+            // Calls method that checks if the player should be still alive
+            CheckIfDying();
 
-        // Calls method that checks if the player should be still alive
-        CheckIfDying();
+            // Player movement
+            MovePlayer(speed);
+            Flip();
 
-        // Player movement
-        MovePlayer(speed);
-        Flip();
+            // Left player movement
+            LeftPlayerMovement();
 
-       // Left player movement
-        LeftPlayerMovement();
+            // Right player movement
+            RightPlayerMovement();
 
-        // Right player movement
-        RightPlayerMovement();
-
-        // Jumping
-        JumpMovement();
+            // Jumping
+            JumpMovement();
+        }
 
     }
-    // Sends the player back to the main menu when clicked on the "Back to main menu" button or when won/lost
-    public void BackToStartMenu() {
-        SceneManager.LoadScene("StartScene");
-    }
 
+    #region Dying
     // Checks if player should die
     private void CheckIfDying() {
         // If the ammount of health is eaquel or less than 0 the player is invisible, the deathanimation is played and the game is over
         if(inGameUIScript.health <= 0)
-        { 
-           StartCoroutine(TimeBetween());            
+        {
+           // Stop moveability
+           isDead = true;
+           StartCoroutine(TimeBetween());    
+           
         }
     }
 
@@ -88,10 +92,10 @@ public class PlayerController : MonoBehaviour {
            deathAnim.Play();
            rend.enabled = !enabled;
            yield return new WaitForSeconds(3);
-           BackToStartMenu();
+        InGameUIScript.instance.ToStartMenu();
     }
+    #endregion
 
-    
     // Flip if switching to the other side
     private void Flip() {
         // Code to flip the character to the right disrection
@@ -104,6 +108,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    // Called when collides with other object
     private void OnCollisionEnter2D(Collision2D other) {
      
         DetermineCoin determineCoin;
@@ -150,6 +155,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    #region MovementWithKeys
     // Player movement with keys
     private void MovePlayer(float playerSpeed) {
         // Code for player movement
@@ -200,7 +206,9 @@ public class PlayerController : MonoBehaviour {
             SwitchBetweenStates();
         }
     }
+    #endregion
 
+    #region MovementWithButtons
     //Methods for moving the player character by UI buttons
     public void WalkLeft() {
         speed = -speedX;
@@ -223,6 +231,7 @@ public class PlayerController : MonoBehaviour {
     public void StopMoving() {
         speed = 0;
     }
+    #endregion
 
     // Switch between states
     private void SwitchBetweenStates() {
